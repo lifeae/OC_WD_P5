@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orinoco</title>
+  <script src="../js/basket.js" defer></script>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/main.css">
+  
+</head>
+
+<body class="mb-4">
+  <a href="./index.html" class="text-decoration-none">
+    <div class="jumbotron text-white text-center m-0">
+      <h1 class="display-4">Camera Shop</h1>
+      <p class="lead">Come and find the best cameras on the market</p>
+      <hr class="my-2 w-50 border-white">
+      <p>Enjoy your visit!</p>
+    </div>
+  </a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto d-flex flex-row">
+      <li class="nav-item m-1">
+        <a class="navbar-brand" href="index.html">Camera Shop</a>
+      </li>
+      <li class="nav-item active m-1">
+        <a class="nav-link" href="basket.html">Panier</a>
+      </li>
+    </ul>
+  </nav>
+  <div id="basket" class="d-flex flex-wrap justify-content-around"></div>
+  <div id="payment" class="card border-light m-auto text-center w-50">
+    <h1 class="card-title">Paiement</h1>
+    <h2 id="total"></h2>
+    <p>Veuillez remplir les champs suivants pour pouvoir procéder au paiement :</p>
+    <form class="card-body">
+      <div class="form-group">
+        <label for="firstName">Prénom</label>
+        <input type="text" class="form-control" id="firstName" placeholder="Prénom" required value="Romain">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Nom</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Nom" required value="Leporatti">
+      </div>
+      <div class="form-group">
+        <label for="address">Adresse</label>
+        <input type="text" class="form-control" id="address" placeholder="Adresse" required value="64 Impasse Sainte-Thérèse">
+      </div>
+      <div class="form-group">
+        <label for="city">Ville</label>
+        <input type="text" class="form-control" id="city" placeholder="Ville" required value="Nîmes">
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse mail</label>
+        <input type="email" class="form-control" id="email" placeholder="Adresse mail" required value="romain.leporatti@gmail.com">
+      </div>
+    </form>
+    <a id="submitPayment" class="btn btn-success card-footer" role="button" type="submit">Envoyer</a>
+  </div>
+</body>
+
+</html>
