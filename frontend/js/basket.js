@@ -13,7 +13,7 @@ function basket() {
         image = document.createElement("img"),
         productPageLink = document.createElement("a"),
         urlPage = "product.html?id=" + basketItems[i]._id,
-        selectedLense = document.createElement("p"),
+        selectedLense = document.createElement("h4"),
         quantity = document.createElement("div"),
         selectedQuantity = document.createElement("input"),
         modifyQuantityButton = document.createElement("button"),
@@ -22,12 +22,13 @@ function basket() {
         // Remplissage des éléments
         name.appendChild(document.createTextNode(basketItems[i].name));
         image.src = basketItems[i].imageUrl;
-        price.appendChild(document.createTextNode((basketItems[i].price / 100).toLocaleString("en") + " $"));
         productPageLink.appendChild(document.createTextNode("Voir la page du produit"));
         productPageLink.setAttribute('href', urlPage);
         selectedLense.appendChild(document.createTextNode(basketItems[i].selectedLense));
         modifyQuantityButton.appendChild(document.createTextNode("Modifier la quantité"));
         deleteItemButton.appendChild(document.createTextNode("Supprimer"));
+        price.appendChild(document.createTextNode((basketItems[i].price * basketItems[i].selectedQuantity / 100).toLocaleString("en") + " $"));
+
 
         //Stylisation des éléments
         productPageLink.classList.add("btn", "btn-secondary");
@@ -146,7 +147,8 @@ function submitPayment() {
         },
         products = productsID;
     //Récupérer l'orderId
-    let orderId = fetch('http://localhost:3000/api/cameras/order', {
+    let orderId;
+    fetch('http://localhost:3000/api/cameras/order', {
         method: 'post',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -155,9 +157,9 @@ function submitPayment() {
         })
     })
     .then(response => response.json())
-    .then((json => json.orderId) => {
-        orderId = json;
-        console.log(orderId);
+    .then(order => {
+        localStorage.setItem("orderId", order.orderId);
+        window.location.href = "order.html";
     });
 }
 

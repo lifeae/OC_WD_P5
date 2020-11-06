@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
   <a href="./index.html" class="text-decoration-none">
     <div class="jumbotron text-white text-center m-0">
       <h1 class="display-4">Camera Shop</h1>
@@ -19,7 +20,7 @@
       <p>Enjoy your visit!</p>
     </div>
   </a>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <ul class="navbar-nav mr-auto d-flex flex-row">
       <li class="nav-item m-1">
         <a class="navbar-brand" href="index.html">Camera Shop</a>
@@ -29,9 +30,16 @@
       </li>
     </ul>
   </nav>
-  <h1>Merci pour votre commande !</h1>
-  <p>Vous la recevrez d'ici quelques jours !</p>
-  <p>Votre numéro de commande : <strong></strong></p>
+
+  <div class="text-center">
+    <h1>Merci pour votre commande !</h1>
+    <h2>Vous la recevrez d'ici quelques jours !</h2>
+    <hr class="w-50 border-white">
+    <p>Numéro de commande : <strong></strong></p>
+    <hr class="w-25 border-white">
+    <h4 id="total"></h4>
+    <div id="basket" class="d-flex justify-content-center"></div>
+  </div>
 </body>
 
 </html>

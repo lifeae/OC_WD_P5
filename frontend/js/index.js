@@ -1,7 +1,7 @@
 function getCamerasIndex() {
-  fetch("http://localhost:3000/api/cameras/")
+  fetch("http://localhost:3000/api/cameras/") //appel api, callback, ... return une promesse
     .then(
-      response => {
+      response => { //fonction anonyme prend pour parametre response et return response.json
         return response.json();
       })
     .then(
@@ -50,4 +50,6 @@ function getCamerasIndex() {
     )
 }
 
-getCamerasIndex()
+getCamerasIndex();
+$("#header").load("../html/jumbotron-navbar.html");
+console.log('test');
