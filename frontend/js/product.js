@@ -1,3 +1,12 @@
+function manageBasketDisplay() {
+    //Vérifier si le panier possède au moins une caméra :
+    if (localStorage.getItem("basket") === undefined || localStorage.getItem("basket") === []) {
+        document.querySelector("#basketPage").parentNode.hidden = true;
+    } else {
+        document.querySelector("#basketPage").parentNode.hidden = false;
+    }
+}
+
 function getCamera(id) {
     fetch("http://localhost:3000/api/cameras/" + id)
         .then(
@@ -12,7 +21,7 @@ function getCamera(id) {
                     description = document.querySelector("#description"),
                     image = document.querySelector("#image"),
                     selectLenses = document.querySelector("select");
- 
+
                 // Remplissage des éléments
                 name.appendChild(document.createTextNode(data.name));
                 image.src = data.imageUrl;
@@ -31,10 +40,10 @@ function getCamera(id) {
                     //Création du panier dans le localStorage s'il n'existe pas déjà
                     if (typeof localStorage.getItem("basket") !== "string") {
                         let basket = [];
-                        localStorage.setItem("basket",JSON.stringify(basket));
+                        localStorage.setItem("basket", JSON.stringify(basket));
                     }
                     //Récupérer les informations de la caméra
-                    data.selectedLense = $("select option:selected").text();
+                    data.selectedLense = document.querySelector("option:checked").innerText;
                     data.selectedQuantity = document.querySelector("input").value;
                     delete data.lenses;
                     //création d'une variable pour manipuler le panier
@@ -51,10 +60,10 @@ function getCamera(id) {
                     //Ajouter la caméra au panier
                     if (isThisItemExist === false) {
                         basket.push(data);
-                        localStorage.setItem("basket",JSON.stringify(basket));
+                        localStorage.setItem("basket", JSON.stringify(basket));
                     } else {
                         existingItem.selectedQuantity = parseInt(existingItem.selectedQuantity, 10) + parseInt(data.selectedQuantity, 10);
-                        localStorage.setItem("basket",JSON.stringify(basket));
+                        localStorage.setItem("basket", JSON.stringify(basket));
                     }
                 }
             }
@@ -63,4 +72,5 @@ function getCamera(id) {
 
 let params = (new URL(document.location)).searchParams;
 let id = params.get("id");
+manageBasketDisplay();
 getCamera(id);

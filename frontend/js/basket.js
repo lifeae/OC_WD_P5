@@ -1,23 +1,32 @@
 let basketItems = JSON.parse(localStorage.getItem("basket"));
 let productsID = [];
 
+function manageBasketDisplay() {
+    //Vérifier si le panier possède au moins une caméra :
+    if (localStorage.getItem("basket") === undefined || localStorage.getItem("basket") === []) {
+        document.querySelector("#basketPage").parentNode.hidden = true;
+    } else {
+        document.querySelector("#basketPage").parentNode.hidden = false;
+    }
+}
+
 function basket() {
     for (let i = 0; i < basketItems.length; i++) {
         productsID.push(basketItems[i]._id);
         // Création des éléments
         let basket = document.querySelector("#basket"),
-        basketItem = document.createElement("div"),
-        basketItemBody = document.createElement("div"),
-        name = document.createElement("h3"),
-        price = document.createElement("h4"),
-        image = document.createElement("img"),
-        productPageLink = document.createElement("a"),
-        urlPage = "product.html?id=" + basketItems[i]._id,
-        selectedLense = document.createElement("h4"),
-        quantity = document.createElement("div"),
-        selectedQuantity = document.createElement("input"),
-        modifyQuantityButton = document.createElement("button"),
-        deleteItemButton = document.createElement("button");
+            basketItem = document.createElement("div"),
+            basketItemBody = document.createElement("div"),
+            name = document.createElement("h3"),
+            price = document.createElement("h4"),
+            image = document.createElement("img"),
+            productPageLink = document.createElement("a"),
+            urlPage = "product.html?id=" + basketItems[i]._id,
+            selectedLense = document.createElement("h4"),
+            quantity = document.createElement("div"),
+            selectedQuantity = document.createElement("input"),
+            modifyQuantityButton = document.createElement("button"),
+            deleteItemButton = document.createElement("button");
 
         // Remplissage des éléments
         name.appendChild(document.createTextNode(basketItems[i].name));
@@ -41,11 +50,11 @@ function basket() {
         name.classList.add("card-title");
         productPageLink.classList.add("card-footer");
         quantity.classList.add("d-flex", "flex-row");
-        selectedQuantity.classList.add("form-control","w-25");
+        selectedQuantity.classList.add("form-control", "w-25");
         selectedQuantity.setAttribute("value", basketItems[i].selectedQuantity);
-        modifyQuantityButton.classList.add("modifyQuantity", "btn","btn-light", "w-75");
+        modifyQuantityButton.classList.add("modifyQuantity", "btn", "btn-light", "w-75");
         modifyQuantityButton.addEventListener("click", modifyQuantity, false);
-        deleteItemButton.classList.add("deleteItem", "btn","btn-danger","m-3");
+        deleteItemButton.classList.add("deleteItem", "btn", "btn-danger", "m-3");
         deleteItemButton.addEventListener("click", deleteItem, false);
 
         // Placement des éléments de la camera dans son li
@@ -71,7 +80,7 @@ function totalPrice() {
     for (let j = 0; j < basketItems.length; j++) {
         total = total + (basketItems[j].price * basketItems[j].selectedQuantity);
     }
-    document.querySelector("#total").appendChild(document.createTextNode("Total : " + (total/100).toLocaleString("en") + " $"));
+    document.querySelector("#total").appendChild(document.createTextNode("Total : " + (total / 100).toLocaleString("en") + " $"));
 }
 
 function modifyQuantity() {
@@ -122,10 +131,10 @@ function checkFieldValidity(input, regExp) {
 function submitPayment() {
     //Récupérer les informations du formulaire
     var firstName = document.querySelector("#firstName").value,
-    lastName = document.querySelector("#lastName").value,
-    address = document.querySelector("#address").value,
-    city = document.querySelector("#city").value,
-    email = document.querySelector("#email").value;
+        lastName = document.querySelector("#lastName").value,
+        address = document.querySelector("#address").value,
+        city = document.querySelector("#city").value,
+        email = document.querySelector("#email").value;
 
     //Définition des expressions régulières pour la vérification de la validité des champs
     let stringRegExp = "([A-Za-z0-9 _\-\u00C0-\u024F]+)",
@@ -133,7 +142,7 @@ function submitPayment() {
     //Vérification de la validité des champs
     firstName = checkFieldValidity(firstName, stringRegExp);
     lastName = checkFieldValidity(lastName, stringRegExp);
-    address= checkFieldValidity(address, stringRegExp);
+    address = checkFieldValidity(address, stringRegExp);
     city = checkFieldValidity(city, stringRegExp);
     email = checkFieldValidity(email, emailRegExp);
 
@@ -144,24 +153,25 @@ function submitPayment() {
         address: address,
         city: city,
         email: email
-        },
+    },
         products = productsID;
     //Récupérer l'orderId
     let orderId;
     fetch('http://localhost:3000/api/cameras/order', {
         method: 'post',
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             contact: contact,
             products: products
         })
     })
-    .then(response => response.json())
-    .then(order => {
-        localStorage.setItem("orderId", order.orderId);
-        window.location.href = "order.html";
-    });
+        .then(response => response.json())
+        .then(order => {
+            localStorage.setItem("orderId", order.orderId);
+            window.location.href = "order.html";
+        });
 }
 
+manageBasketDisplay();
 basket();
 document.querySelector("#submitPayment").addEventListener("click", submitPayment, false);

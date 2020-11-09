@@ -7,13 +7,31 @@
   <title>Orinoco</title>
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/main.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" defer crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" defer
+    crossorigin="anonymous"></script>
   <script src="../../frontend/js/index.js" defer></script>
 </head>
 
 <body>
-  <div id="header"></div>
-
+  <a href="./index.html" class="text-decoration-none">
+    <div class="jumbotron text-white text-center m-0">
+      <h1 class="display-4">Camera Shop</h1>
+      <p class="lead">Come and find the best cameras on the market</p>
+      <hr class="my-2 w-50 border-white">
+      <p>Enjoy your visit!</p>
+    </div>
+  </a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <ul class="navbar-nav mr-auto d-flex flex-row">
+      <li class="nav-item m-1">
+        <a class="navbar-brand" href="index.html">Camera Shop</a>
+      </li>
+      <li class="nav-item m-1">
+        <a id="basketPage" class="nav-link" href="basket.html">Panier</a>
+      </li>
+    </ul>
+  </nav>
 
   <div class="cameras d-flex flex-wrap justify-content-around"></div>
 

@@ -1,3 +1,12 @@
+function manageBasketDisplay() {
+  //Vérifier si le panier possède au moins une caméra :
+  if (localStorage.getItem("basket") === undefined || localStorage.getItem("basket") === []) {
+      document.querySelector("#basketPage").parentNode.hidden = true;
+  } else {
+      document.querySelector("#basketPage").parentNode.hidden = false;
+  }
+}
+
 function getCamerasIndex() {
   fetch("http://localhost:3000/api/cameras/") //appel api, callback, ... return une promesse
     .then(
@@ -34,7 +43,7 @@ function getCamerasIndex() {
           cameraItemBody.classList.add("card-body");
           name.classList.add("card-title");
           productPageLink.classList.add("card-footer");
-          
+
           // Placement des éléments de la camera dans son li
           cameraItemBody.appendChild(price);
           cameraItemBody.appendChild(description);
@@ -50,6 +59,5 @@ function getCamerasIndex() {
     )
 }
 
+manageBasketDisplay();
 getCamerasIndex();
-$("#header").load("../html/jumbotron-navbar.html");
-console.log('test');
