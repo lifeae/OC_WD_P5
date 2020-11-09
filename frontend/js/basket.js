@@ -3,10 +3,16 @@ let productsID = [];
 
 function manageBasketDisplay() {
     //Vérifier si le panier possède au moins une caméra :
-    if (localStorage.getItem("basket") === undefined || localStorage.getItem("basket") === []) {
+    if (localStorage.getItem("basket") === null || localStorage.getItem("basket") === "[]") {
         document.querySelector("#basketPage").parentNode.hidden = true;
     } else {
         document.querySelector("#basketPage").parentNode.hidden = false;
+    }
+}
+
+function returnToHomePageIfUserEmptyTheBasket() {
+    if (localStorage.getItem("basket") === null || localStorage.getItem("basket") === "[]") {
+        window.location.href = "index.html";
     }
 }
 
@@ -119,6 +125,7 @@ function deleteItem() {
     localStorage.setItem("basket", (JSON.stringify(basketItems)));
     window.location.reload(true);
     alert("Item supprimé !");
+    returnToHomePageIfUserEmptyTheBasket()
 }
 
 function checkFieldValidity(input, regExp) {

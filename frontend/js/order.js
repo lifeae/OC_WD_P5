@@ -3,7 +3,7 @@ let productsID = [];
 
 function manageBasketDisplay() {
     //Vérifier si le panier possède au moins une caméra :
-    if (localStorage.getItem("basket") === undefined || localStorage.getItem("basket") === []) {
+    if (localStorage.getItem("basket") === null || localStorage.getItem("basket") === "[]") {
         document.querySelector("#basketPage").parentNode.hidden = true;
     } else {
         document.querySelector("#basketPage").parentNode.hidden = false;
@@ -62,4 +62,5 @@ basket();
 let orderId = localStorage.getItem("orderId");
 document.querySelector("strong").appendChild(document.createTextNode(orderId));
 localStorage.removeItem("basket");
+manageBasketDisplay()
 localStorage.removeItem("orderId");

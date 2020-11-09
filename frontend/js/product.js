@@ -1,6 +1,6 @@
 function manageBasketDisplay() {
     //Vérifier si le panier possède au moins une caméra :
-    if (localStorage.getItem("basket") === undefined || localStorage.getItem("basket") === []) {
+    if (localStorage.getItem("basket") === null || localStorage.getItem("basket") === "[]") {
         document.querySelector("#basketPage").parentNode.hidden = true;
     } else {
         document.querySelector("#basketPage").parentNode.hidden = false;
@@ -65,6 +65,7 @@ function getCamera(id) {
                         existingItem.selectedQuantity = parseInt(existingItem.selectedQuantity, 10) + parseInt(data.selectedQuantity, 10);
                         localStorage.setItem("basket", JSON.stringify(basket));
                     }
+                    manageBasketDisplay();
                 }
             }
         )
