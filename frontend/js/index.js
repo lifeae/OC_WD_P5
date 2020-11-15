@@ -15,18 +15,18 @@ function getCamerasIndex() {
       })
     .then(
       function (data) {
-        for (let i = 0; i < data.length; i++) {
+        function getOneCamera(i) {
           // Création des éléments
           let cameras = document.querySelector(".cameras"),
-            cameraItem = document.createElement("div"),
-            cameraItemBody = document.createElement("div"),
-            name = document.createElement("h4"),
-            price = document.createElement("h5"),
-            description = document.createElement("p"),
-            image = document.createElement("img"),
-            productPageLink = document.createElement("a"),
-            urlPage = "product.html?id=" + data[i]._id;
-
+          cameraItem = document.createElement("div"),
+          cameraItemBody = document.createElement("div"),
+          name = document.createElement("h4"),
+          price = document.createElement("h5"),
+          description = document.createElement("p"),
+          image = document.createElement("img"),
+          productPageLink = document.createElement("a"),
+          urlPage = "product.html?id=" + data[i]._id;
+        
           // Remplissage des éléments
           name.appendChild(document.createTextNode(data[i].name));
           image.src = data[i].imageUrl;
@@ -34,7 +34,7 @@ function getCamerasIndex() {
           description.appendChild(document.createTextNode(data[i].description));
           productPageLink.appendChild(document.createTextNode("Voir la page du produit"));
           productPageLink.setAttribute('href', urlPage);
-
+        
           //Stylisation des éléments
           productPageLink.classList.add("btn", "btn-secondary");
           productPageLink.setAttribute("role", "button");
@@ -43,7 +43,7 @@ function getCamerasIndex() {
           cameraItemBody.classList.add("card-body");
           name.classList.add("card-title");
           productPageLink.classList.add("card-footer");
-
+        
           // Placement des éléments de la camera dans son li
           cameraItemBody.appendChild(price);
           cameraItemBody.appendChild(description);
@@ -51,10 +51,15 @@ function getCamerasIndex() {
           cameraItem.appendChild(image);
           cameraItem.appendChild(cameraItemBody);
           cameraItem.appendChild(productPageLink);
-
+        
           // Placement de la camera dans le ul
           cameras.appendChild(cameraItem);
         }
+
+        for (let i = 0; i < data.length; i++) {
+          getOneCamera(i);
+        }
+        
       }
     )
 }

@@ -15,26 +15,25 @@ function getCamera(id) {
             })
         .then(
             function (data) {
-                // Création des éléments
-                let name = document.querySelector("#name"),
+                function getCamera(data) {
+                    // Création des éléments
+                    let name = document.querySelector("#name"),
                     price = document.querySelector("#price"),
                     description = document.querySelector("#description"),
                     image = document.querySelector("#image"),
                     selectLenses = document.querySelector("select");
 
-                // Remplissage des éléments
-                name.appendChild(document.createTextNode(data.name));
-                image.src = data.imageUrl;
-                price.appendChild(document.createTextNode((data.price / 100).toLocaleString("en") + " $"));
-                description.appendChild(document.createTextNode(data.description));
-                for (i = 0; i < data.lenses.length; i++) {
-                    let option = document.createElement("option");
-                    option.textContent = data.lenses[i];
-                    selectLenses.appendChild(option);
+                    // Remplissage des éléments
+                    name.appendChild(document.createTextNode(data.name));
+                    image.src = data.imageUrl;
+                    price.appendChild(document.createTextNode((data.price / 100).toLocaleString("en") + " $"));
+                    description.appendChild(document.createTextNode(data.description));
+                    for (i = 0; i < data.lenses.length; i++) {
+                        let option = document.createElement("option");
+                        option.textContent = data.lenses[i];
+                        selectLenses.appendChild(option);
+                    }
                 }
-                // Ecouter les clics sur le bouton addToBasket
-                let addItemToBasket = document.querySelector("#addToBasket");
-                addItemToBasket.addEventListener("click", addToBasket, false);
 
                 function addToBasket() {
                     //Création du panier dans le localStorage s'il n'existe pas déjà
@@ -67,6 +66,11 @@ function getCamera(id) {
                     }
                     manageBasketDisplay();
                 }
+                
+                getCamera(data);
+                // Ecouter les clics sur le bouton addToBasket
+                let addItemToBasket = document.querySelector("#addToBasket");
+                addItemToBasket.addEventListener("click", addToBasket, false);
             }
         )
 }

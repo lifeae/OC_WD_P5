@@ -16,67 +16,71 @@ function returnToHomePageIfUserEmptyTheBasket() {
     }
 }
 
+function getBasketItem(i) {
+    productsID.push(basketItems[i]._id);
+    // Création des éléments
+    let basket = document.querySelector("#basket"),
+        basketItem = document.createElement("div"),
+        basketItemBody = document.createElement("div"),
+        name = document.createElement("h3"),
+        price = document.createElement("h4"),
+        image = document.createElement("img"),
+        productPageLink = document.createElement("a"),
+        urlPage = "product.html?id=" + basketItems[i]._id,
+        selectedLense = document.createElement("h4"),
+        quantity = document.createElement("div"),
+        selectedQuantity = document.createElement("input"),
+        modifyQuantityButton = document.createElement("button"),
+        deleteItemButton = document.createElement("button");
+
+    // Remplissage des éléments
+    name.appendChild(document.createTextNode(basketItems[i].name));
+    image.src = basketItems[i].imageUrl;
+    productPageLink.appendChild(document.createTextNode("Voir la page du produit"));
+    productPageLink.setAttribute('href', urlPage);
+    selectedLense.appendChild(document.createTextNode(basketItems[i].selectedLense));
+    modifyQuantityButton.appendChild(document.createTextNode("Modifier la quantité"));
+    deleteItemButton.appendChild(document.createTextNode("Supprimer"));
+    price.appendChild(document.createTextNode((basketItems[i].price * basketItems[i].selectedQuantity / 100).toLocaleString("en") + " $"));
+
+
+    //Stylisation des éléments
+    productPageLink.classList.add("btn", "btn-secondary");
+    productPageLink.setAttribute("role", "button");
+    basketItem.classList.add("card", "border-light", "text-center", "m-4", "w-25");
+    basketItem.setAttribute("data-id", basketItems[i]._id);
+    basketItem.setAttribute("data-lense", basketItems[i].selectedLense);
+    image.classList.add("card-img-top");
+    basketItemBody.classList.add("card-body");
+    name.classList.add("card-title");
+    productPageLink.classList.add("card-footer");
+    quantity.classList.add("d-flex", "flex-row");
+    selectedQuantity.classList.add("form-control", "w-25");
+    selectedQuantity.setAttribute("value", basketItems[i].selectedQuantity);
+    modifyQuantityButton.classList.add("modifyQuantity", "btn", "btn-light", "w-75");
+    modifyQuantityButton.addEventListener("click", modifyQuantity, false);
+    deleteItemButton.classList.add("deleteItem", "btn", "btn-danger", "m-3");
+    deleteItemButton.addEventListener("click", deleteItem, false);
+
+    // Placement des éléments de la camera dans son li
+    basketItemBody.appendChild(price);
+    basketItemBody.appendChild(quantity);
+    quantity.appendChild(selectedQuantity);
+    quantity.appendChild(modifyQuantityButton);
+    basketItem.appendChild(name);
+    basketItem.appendChild(selectedLense);
+    basketItem.appendChild(image);
+    basketItem.appendChild(basketItemBody);
+    basketItem.appendChild(deleteItemButton);
+    basketItem.appendChild(productPageLink);
+
+    // Placement de la camera dans le ul
+    basket.appendChild(basketItem);
+}
+
 function basket() {
     for (let i = 0; i < basketItems.length; i++) {
-        productsID.push(basketItems[i]._id);
-        // Création des éléments
-        let basket = document.querySelector("#basket"),
-            basketItem = document.createElement("div"),
-            basketItemBody = document.createElement("div"),
-            name = document.createElement("h3"),
-            price = document.createElement("h4"),
-            image = document.createElement("img"),
-            productPageLink = document.createElement("a"),
-            urlPage = "product.html?id=" + basketItems[i]._id,
-            selectedLense = document.createElement("h4"),
-            quantity = document.createElement("div"),
-            selectedQuantity = document.createElement("input"),
-            modifyQuantityButton = document.createElement("button"),
-            deleteItemButton = document.createElement("button");
-
-        // Remplissage des éléments
-        name.appendChild(document.createTextNode(basketItems[i].name));
-        image.src = basketItems[i].imageUrl;
-        productPageLink.appendChild(document.createTextNode("Voir la page du produit"));
-        productPageLink.setAttribute('href', urlPage);
-        selectedLense.appendChild(document.createTextNode(basketItems[i].selectedLense));
-        modifyQuantityButton.appendChild(document.createTextNode("Modifier la quantité"));
-        deleteItemButton.appendChild(document.createTextNode("Supprimer"));
-        price.appendChild(document.createTextNode((basketItems[i].price * basketItems[i].selectedQuantity / 100).toLocaleString("en") + " $"));
-
-
-        //Stylisation des éléments
-        productPageLink.classList.add("btn", "btn-secondary");
-        productPageLink.setAttribute("role", "button");
-        basketItem.classList.add("card", "border-light", "text-center", "m-4", "w-25");
-        basketItem.setAttribute("data-id", basketItems[i]._id);
-        basketItem.setAttribute("data-lense", basketItems[i].selectedLense);
-        image.classList.add("card-img-top");
-        basketItemBody.classList.add("card-body");
-        name.classList.add("card-title");
-        productPageLink.classList.add("card-footer");
-        quantity.classList.add("d-flex", "flex-row");
-        selectedQuantity.classList.add("form-control", "w-25");
-        selectedQuantity.setAttribute("value", basketItems[i].selectedQuantity);
-        modifyQuantityButton.classList.add("modifyQuantity", "btn", "btn-light", "w-75");
-        modifyQuantityButton.addEventListener("click", modifyQuantity, false);
-        deleteItemButton.classList.add("deleteItem", "btn", "btn-danger", "m-3");
-        deleteItemButton.addEventListener("click", deleteItem, false);
-
-        // Placement des éléments de la camera dans son li
-        basketItemBody.appendChild(price);
-        basketItemBody.appendChild(quantity);
-        quantity.appendChild(selectedQuantity);
-        quantity.appendChild(modifyQuantityButton);
-        basketItem.appendChild(name);
-        basketItem.appendChild(selectedLense);
-        basketItem.appendChild(image);
-        basketItem.appendChild(basketItemBody);
-        basketItem.appendChild(deleteItemButton);
-        basketItem.appendChild(productPageLink);
-
-        // Placement de la camera dans le ul
-        basket.appendChild(basketItem);
+        getBasketItem(i);
     }
     totalPrice()
 }
@@ -153,6 +157,11 @@ function submitPayment() {
     city = checkFieldValidity(city, stringRegExp);
     email = checkFieldValidity(email, emailRegExp);
 
+    //Si l'un des champs a été vidé, la fonction s'arrête sinon on continue
+    if (firstName === "" || lastName === "" || address === "" || city === "" || email === "") {
+        return alert("Les données entrées dans le formulaire ne correspondent pas au format attendu.");
+    }
+
     //Les entrer dans un objet
     let contact = {
         firstName: firstName,
@@ -176,7 +185,8 @@ function submitPayment() {
         .then(order => {
             localStorage.setItem("orderId", order.orderId);
             window.location.href = "order.html";
-        });
+        })
+        .catch(error => alert("Un des champ du formulaire n'est pas correct !"));
 }
 
 manageBasketDisplay();
