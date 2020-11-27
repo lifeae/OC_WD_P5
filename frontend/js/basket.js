@@ -133,34 +133,47 @@ function deleteItem() {
 }
 
 function checkFieldValidity(input, regExp) {
-    if (input.match(regExp) === null) {
+    if (input.value.match(regExp) === null) {
+      input.classList.add(":invalid");
         return "";
+    } else {
+      input.classList.add(":valid");
     }
     return input;
 }
 
 function submitPayment() {
     //Récupérer les informations du formulaire
-    var firstName = document.querySelector("#firstName").value,
-        lastName = document.querySelector("#lastName").value,
-        address = document.querySelector("#address").value,
-        city = document.querySelector("#city").value,
-        email = document.querySelector("#email").value;
+    var firstName = document.querySelector("#firstName"),
+        lastName = document.querySelector("#lastName"),
+        address = document.querySelector("#address"),
+        city = document.querySelector("#city"),
+        email = document.querySelector("#email");
 
-    //Définition des expressions régulières pour la vérification de la validité des champs
-    let stringRegExp = "([A-Za-z0-9 _\-\u00C0-\u024F]+)",
-        emailRegExp = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i;
     //Vérification de la validité des champs
-    firstName = checkFieldValidity(firstName, stringRegExp);
-    lastName = checkFieldValidity(lastName, stringRegExp);
-    address = checkFieldValidity(address, stringRegExp);
-    city = checkFieldValidity(city, stringRegExp);
-    email = checkFieldValidity(email, emailRegExp);
-
-    //Si l'un des champs a été vidé, la fonction s'arrête sinon on continue
-    if (firstName === "" || lastName === "" || address === "" || city === "" || email === "") {
-        return alert("Les données entrées dans le formulaire ne correspondent pas au format attendu.");
+    let isAFieldInvalid = false;
+    if (!firstName.checkValidity()) {
+      isAFieldInvalid = true;
+      firstName.setCustomValidity("Le prénom entré est incorrect !");
     }
+    if (!lastName.checkValidity()) {
+      isAFieldInvalid = true;
+      lastName.setCustomValidity("Le nom entré est incorrect !");
+    }
+    if (!address.checkValidity()) {
+      isAFieldInvalid = true;
+      address.setCustomValidity("L'adresse entrée est incorrecte !");
+    }
+    if (!city.checkValidity()) {
+      isAFieldInvalid = true;
+      city.setCustomValidity("La ville entrée est incorrecte !");
+    }
+    if (!email.checkValidity()) {
+      isAFieldInvalid = true;
+      email.setCustomValidity("L'adresse mail entrée est incorrecte !");
+    }
+
+    if (isAFieldInvalid) return;
 
     //Les entrer dans un objet
     let contact = {

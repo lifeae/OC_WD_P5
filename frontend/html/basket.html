@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Orinoco</title>
-  <link rel="shortcut icon" href="../img/favicon.png"/>
+  <link rel="shortcut icon" href="../img/favicon.png" />
   <script src="../js/basket.js" defer></script>
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/main.css">
@@ -41,23 +41,23 @@
     <form class="card-body">
       <div class="form-group">
         <label for="firstName">Prénom</label>
-        <input type="text" class="form-control" id="firstName" placeholder="Prénom" required>
+        <input type="text" class="form-control" id="firstName" placeholder="Prénom" pattern="([A-Za-z0-9 _\-\u00C0-\u024F]+)" required>
       </div>
       <div class="form-group">
         <label for="lastName">Nom</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Nom" required>
+        <input type="text" class="form-control" id="lastName" placeholder="Nom" pattern="([A-Za-z0-9 _\-\u00C0-\u024F]+)" required>
       </div>
       <div class="form-group">
         <label for="address">Adresse</label>
-        <input type="text" class="form-control" id="address" placeholder="Adresse" required>
+        <input type="text" class="form-control" id="address" placeholder="Adresse" pattern="([A-Za-z0-9 _\-\u00C0-\u024F]+)" required>
       </div>
       <div class="form-group">
         <label for="city">Ville</label>
-        <input type="text" class="form-control" id="city" placeholder="Ville" required>
+        <input type="text" class="form-control" id="city" placeholder="Ville" pattern="([A-Za-z0-9 _\-\u00C0-\u024F]+)" required>
       </div>
       <div class="form-group">
         <label for="email">Adresse mail</label>
-        <input type="email" class="form-control" id="email" placeholder="Adresse mail" required>
+        <input type="email" class="form-control" id="email" placeholder="Adresse mail" pattern="/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i" required>
       </div>
     </form>
     <a id="submitPayment" class="btn btn-success card-footer" role="button" type="submit">Envoyer</a>
