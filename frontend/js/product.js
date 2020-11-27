@@ -7,21 +7,6 @@ function manageBasketDisplay() {
   }
 }
 
-function getCamera(id) {
-  fetch("http://localhost:3000/api/cameras/" + id)
-    .then(
-      response => {
-        return response.json();
-      })
-    .then(function (data) {
-      showCamera(data);
-      manageBasketDisplay();
-      // Ecouter les clics sur le bouton addToBasket
-      let addItemToBasket = document.querySelector("#addToBasket");
-      addItemToBasket.addEventListener("click", addToBasket(data), false);
-    })
-}
-
 function showCamera(data) {
   // Création des éléments
   let name = document.querySelector("#name"),
@@ -40,6 +25,17 @@ function showCamera(data) {
     option.textContent = data.lenses[i];
     selectLenses.appendChild(option);
   }
+}
+
+function getCamera(id) {
+  fetch("http://localhost:3000/api/cameras/" + id)
+    .then(response => response.json())
+    .then(data => {
+      showCamera(data);
+      // Ecouter les clics sur le bouton addToBasket
+      let addItemToBasket = document.querySelector("#addToBasket");
+      addItemToBasket.addEventListener("click", function () {addToBasket(data)}, false);
+  })
 }
 
 function addToBasket(data) {
